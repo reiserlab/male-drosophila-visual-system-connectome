@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tm23_R - Optic Lobe Connectome</title>
+    <link rel="stylesheet" href="styles/chota.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+            /* Center the main content and add maximum width */
+        body > .container {
+            max-width: 1400px; /* or any other max-width you prefer */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem; /* This adds some padding within the container */
+            padding-right: 1rem; /* This adds some padding within the container */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .gallery_video, .threeD_view {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            overflow: hidden; /* Add this line to prevent iframe overflow issues */
+        }
+        
+        .gallery_video iframe, .threeD_view iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .counter{
+            font-size:80%;
+        }
+
+        col.is-center .header_1 {
+            margin-bottom: 0px !important;
+        }
+
+        .main-group-nt-pred{
+            font-weight: 500;
+            font-size: 1.2em;
+            padding: 0;
+            margin-top: 0;
+            margin-bottom: 10px; 
+            }
+
+        .pad-left{
+            padding-left: 20px;
+        }
+
+
+        /* Apply a border under the entire header row */
+        .row thead tr {
+            border-bottom: 2px solid #000; /* Adjust color as needed */
+        }
+        
+        /* Ensure no border under td elements and the first th in the body rows */
+        .row tbody th, .row tbody td {
+            border-bottom: none;
+        }
+
+        /* Apply increased padding to header cells in the <thead> */
+        .layer-stats-table thead th {
+            padding: 10px; /* More padding for the header cells */
+        }
+
+        /* Apply standard padding to all cells and row headers in the <tbody> */
+        .layer-stats-table tbody th,
+        .layer-stats-table tbody td {
+            padding: 3px; /* Less padding for body cells and row headers */
+        }
+
+
+        .card p {
+            margin-bottom: 5px; 
+        }
+
+        .ame-stats tbody th, .cb-stats tbody th, .me-stats tbody th {
+            color: transparent;
+        }
+
+        .text-center td, .text-center thead th{
+            text-align:center;
+        }
+
+        .text-left td, .text-left thead th{
+            text-align:left;
+        }
+
+        .connectivity-table tbody tr th,  .connectivity-table thead th.blank.level0{
+            display: none;
+        }
+        .connectivity-table {
+            padding-left: 10px;
+            text-align:left;
+        }
+        .connectivity-table tr th, .connectivity-table td {
+            padding-left: 0px; /* Adjust the left padding to create space on the left side of each cell */
+            padding-right: 20px; /* Adjust the right padding to create space on the right side of each cell */
+        }
+
+            /* Remove or reduce padding for the first th and td of each row */
+        .connectivity-table tr th:first-child, .connectivity-table td:first-child {
+            padding-left: 0px; /* Less padding on the left side for the first column */
+            padding-right: 10px; /* You can also adjust this if needed */
+        }
+
+        .nav-right a:link {
+            color: #007bff; /* Blue color for links */
+            text-decoration: none; /* Optional: removes underline from links */
+        }
+
+        .nav-right a:visited {
+            color: #0056b3; /* Darker blue color for visited links */
+        }
+
+        .nav-right a:hover {
+            color: #0056b3; /* Darker blue color on hover */
+            text-decoration: underline; /* Optional: adds underline on hover */
+        }
+
+        .nav-right a:active {
+            color: #004299; /* Even darker blue color when the link is clicked */
+        }
+
+        .connectivity-link:hover {
+            color: green; /* Lighter or different color on hover */
+            text-decoration: underline; /* Optional: adds underline on hover */
+        }
+
+        .non-functional-link {
+            color: grey; /* Non-functional link color */
+            cursor: default;
+            text-decoration: none;
+        }
+
+        @media (max-width: 1400px) {
+            .connectivity-table {
+                font-size: 90%; /* Slightly smaller font size */
+                width: 100%;
+            }
+
+            /* Reduce padding for cells to save space */
+            .connectivity-table td, .connectivity-table th {
+                padding: 4px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .connectivity-table {
+                font-size: 70%; /* Slightly smaller font size */
+                width: 100%;
+            }
+
+            /* Reduce padding for cells to save space */
+            .connectivity-table td, .connectivity-table th {
+                padding: 3px;
+            }
+        }
+
+       @media (max-width: 1000px) {
+            .connectivity-table {
+                font-size: 50%; /* Slightly smaller font size */
+                width: 100%;
+            }
+
+            /* Reduce padding for cells to save space */
+            .connectivity-table td, .connectivity-table th {
+                padding: 2px;
+            }
+        }
+
+       @media (max-width: 800px) {
+            .connectivity-table {
+                font-size: 20%; /* Slightly smaller font size */
+                width: 100%;
+            }
+
+            /* Reduce padding for cells to save space */
+            .connectivity-table td, .connectivity-table th {
+                padding: 1px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .connectivity-table {
+                font-size: 10%; /* Even smaller font size */
+                width: 100%;
+            }
+
+            /* Further reduce padding */
+            .connectivity-table td, .connectivity-table th {
+                padding: 0px;
+            }
+            .row > [class^="col-"] {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .connectivity-table {
+                font-size: 50%; /* Just one table on top of each other */
+                width: 100%;
+            }
+
+            /* Minimal padding */
+            .connectivity-table td, .connectivity-table th {
+                padding: 1px;
+            }
+
+            /* Adjust or hide more columns as needed */
+            .connectivity-table .more-columns {
+                display: none;
+            }
+        }
+
+        a.txt_OL_intrinsic, span.txt_OL_intrinsic{color:#029e73}
+        a.txt_OL_connecting, span.txt_OL_connecting{color:#D55E00}
+        a.txt_VPN, span.txt_VPN{color:#0173b2}
+        a.txt_VCN, span.txt_VCN{color:#de8f05}
+        a.txt_other, span.txt_other{color:#cc78bc}
+        .txt_hemisphere{color:#888; font-size:80%}
+        .connectivity-table table td{padding-top:.3rem; padding-bottom:.1rem;}
+        .connectivity-table table th{vertical-align:bottom;}
+        .connectivity-table table tr:nth-child(2n) td {
+            background-color: #f8f8f8;
+        }
+        .connectivity-table .col2, .connectivity-table .col3, .connectivity-table .col4, .connectivity-table .col5{text-align:right;}
+        .hover_group:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="nav">
+            <div class="nav-right">
+                <a href="index.html">Home</a>
+                <a href="cell_types.html">Cell Types</a>
+                <a href="webpages_glossary.html">Glossary</a>
+                <a href="https://www.youtube.com/@ReiserLab">YouTube</a>
+                <a href="https://neuprint.janelia.org/?dataset=optic-lobe:v1.0">neuPrint</a>
+            </div>
+        </nav>
+
+        <header class="row">
+            <div class="col is-center">
+                <h1> <a href="https://neuprint.janelia.org/results?dataset=optic-lobe:v1.0&qt=findneurons&qr[0][code]=fn&qr[0][ds]=optic-lobe:v1.0&qr[0][pm][dataset]=optic-lobe:v1.0&qr[0][pm][all_segments]=false&qr[0][pm][enable_contains]=true&qr[0][visProps][rowsPerPage]=50&tab=0&qr[0][pm][neuron_name]=Tm23" class="txt_OL_intrinsic">Tm23&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a>, <span class="counter">n=16 cell(s)</span></h1>
+            </div>
+        </header>
+
+
+        <div class="row">
+            <div class="col is-center">
+                <div class="main-group-nt-pred">
+                    Main group: <span class="txt_OL_intrinsic">Optic Lobe Intrinsic Neurons</span>; 
+                    Neurotransmitter consensus prediction: GABA
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+            <h2 class="pad-left">Mean synapse counts per layer</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-center pad-left layer-stats-table"><style type="text/css">
+#T_242c9 th {
+  text-align: center;
+  background-color: rgba(142, 189, 120, 0.3);
+}
+#T_242c9 td {
+  text-align: center;
+  background-color: rgba(142, 189, 120, 0.3);
+}
+</style>
+<table id="T_242c9">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_242c9_level0_col0" class="col_heading level0 col0" >LA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_242c9_level0_row0" class="row_heading level0 row0" >Post</th>
+      <td id="T_242c9_row0_col0" class="data row0 col0" >-</td>
+    </tr>
+    <tr>
+      <th id="T_242c9_level0_row1" class="row_heading level0 row1" >Pre</th>
+      <td id="T_242c9_row1_col0" class="data row1 col0" >-</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+            <div class="col-8 me-stats text-center layer-stats-table"><style type="text/css">
+#T_a860a th {
+  text-align: center;
+  background-color: rgba(94, 24, 77, 0.3);
+}
+#T_a860a td {
+  text-align: center;
+  background-color: rgba(94, 24, 77, 0.3);
+}
+</style>
+<table id="T_a860a">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_a860a_level0_col0" class="col_heading level0 col0" >M1</th>
+      <th id="T_a860a_level0_col1" class="col_heading level0 col1" >M2</th>
+      <th id="T_a860a_level0_col2" class="col_heading level0 col2" >M3</th>
+      <th id="T_a860a_level0_col3" class="col_heading level0 col3" >M4</th>
+      <th id="T_a860a_level0_col4" class="col_heading level0 col4" >M5</th>
+      <th id="T_a860a_level0_col5" class="col_heading level0 col5" >M6</th>
+      <th id="T_a860a_level0_col6" class="col_heading level0 col6" >M7</th>
+      <th id="T_a860a_level0_col7" class="col_heading level0 col7" >M8</th>
+      <th id="T_a860a_level0_col8" class="col_heading level0 col8" >M9</th>
+      <th id="T_a860a_level0_col9" class="col_heading level0 col9" >M10</th>
+      <th id="T_a860a_level0_col10" class="col_heading level0 col10" >Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_a860a_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_a860a_row0_col0" class="data row0 col0" >0.2</td>
+      <td id="T_a860a_row0_col1" class="data row0 col1" >0.1</td>
+      <td id="T_a860a_row0_col2" class="data row0 col2" >0.3</td>
+      <td id="T_a860a_row0_col3" class="data row0 col3" >0.1</td>
+      <td id="T_a860a_row0_col4" class="data row0 col4" >-</td>
+      <td id="T_a860a_row0_col5" class="data row0 col5" >0.1</td>
+      <td id="T_a860a_row0_col6" class="data row0 col6" >0.1</td>
+      <td id="T_a860a_row0_col7" class="data row0 col7" >0.4</td>
+      <td id="T_a860a_row0_col8" class="data row0 col8" >0.1</td>
+      <td id="T_a860a_row0_col9" class="data row0 col9" >-</td>
+      <td id="T_a860a_row0_col10" class="data row0 col10" >1.4</td>
+    </tr>
+    <tr>
+      <th id="T_a860a_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_a860a_row1_col0" class="data row1 col0" >-</td>
+      <td id="T_a860a_row1_col1" class="data row1 col1" >-</td>
+      <td id="T_a860a_row1_col2" class="data row1 col2" >-</td>
+      <td id="T_a860a_row1_col3" class="data row1 col3" >0.1</td>
+      <td id="T_a860a_row1_col4" class="data row1 col4" >-</td>
+      <td id="T_a860a_row1_col5" class="data row1 col5" >0.1</td>
+      <td id="T_a860a_row1_col6" class="data row1 col6" >-</td>
+      <td id="T_a860a_row1_col7" class="data row1 col7" >-</td>
+      <td id="T_a860a_row1_col8" class="data row1 col8" >-</td>
+      <td id="T_a860a_row1_col9" class="data row1 col9" >-</td>
+      <td id="T_a860a_row1_col10" class="data row1 col10" >0.1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-8 text-center pad-left layer-stats-table"><style type="text/css">
+#T_95584 th {
+  text-align: center;
+  background-color: rgba(187, 74, 95, 0.3);
+}
+#T_95584 td {
+  text-align: center;
+  background-color: rgba(187, 74, 95, 0.3);
+}
+</style>
+<table id="T_95584">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_95584_level0_col0" class="col_heading level0 col0" >LO1</th>
+      <th id="T_95584_level0_col1" class="col_heading level0 col1" >LO2</th>
+      <th id="T_95584_level0_col2" class="col_heading level0 col2" >LO3</th>
+      <th id="T_95584_level0_col3" class="col_heading level0 col3" >LO4</th>
+      <th id="T_95584_level0_col4" class="col_heading level0 col4" >LO5a</th>
+      <th id="T_95584_level0_col5" class="col_heading level0 col5" >LO5b</th>
+      <th id="T_95584_level0_col6" class="col_heading level0 col6" >LO6</th>
+      <th id="T_95584_level0_col7" class="col_heading level0 col7" >Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_95584_level0_row0" class="row_heading level0 row0" >Post</th>
+      <td id="T_95584_row0_col0" class="data row0 col0" >310.8</td>
+      <td id="T_95584_row0_col1" class="data row0 col1" >1454.4</td>
+      <td id="T_95584_row0_col2" class="data row0 col2" >15.1</td>
+      <td id="T_95584_row0_col3" class="data row0 col3" >2.1</td>
+      <td id="T_95584_row0_col4" class="data row0 col4" >0.1</td>
+      <td id="T_95584_row0_col5" class="data row0 col5" >0.1</td>
+      <td id="T_95584_row0_col6" class="data row0 col6" >-</td>
+      <td id="T_95584_row0_col7" class="data row0 col7" >1782.6</td>
+    </tr>
+    <tr>
+      <th id="T_95584_level0_row1" class="row_heading level0 row1" >Pre</th>
+      <td id="T_95584_row1_col0" class="data row1 col0" >115.2</td>
+      <td id="T_95584_row1_col1" class="data row1 col1" >213.5</td>
+      <td id="T_95584_row1_col2" class="data row1 col2" >1.3</td>
+      <td id="T_95584_row1_col3" class="data row1 col3" >0.4</td>
+      <td id="T_95584_row1_col4" class="data row1 col4" >-</td>
+      <td id="T_95584_row1_col5" class="data row1 col5" >-</td>
+      <td id="T_95584_row1_col6" class="data row1 col6" >-</td>
+      <td id="T_95584_row1_col7" class="data row1 col7" >330.4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+            <div class="ame-stats col-2 text-center layer-stats-table"><style type="text/css">
+#T_adf6d th {
+  text-align: center;
+  background-color: rgba(89, 143, 207, 0.3);
+}
+#T_adf6d td {
+  text-align: center;
+  background-color: rgba(89, 143, 207, 0.3);
+}
+</style>
+<table id="T_adf6d">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_adf6d_level0_col0" class="col_heading level0 col0" >AME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_adf6d_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_adf6d_row0_col0" class="data row0 col0" >-</td>
+    </tr>
+    <tr>
+      <th id="T_adf6d_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_adf6d_row1_col0" class="data row1 col0" >-</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-8 text-center pad-left layer-stats-table"><style type="text/css">
+#T_e1e29 th {
+  text-align: center;
+  background-color: rgba(241, 110, 101, 0.3);
+}
+#T_e1e29 td {
+  text-align: center;
+  background-color: rgba(241, 110, 101, 0.3);
+}
+</style>
+<table id="T_e1e29">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_e1e29_level0_col0" class="col_heading level0 col0" >LOP1</th>
+      <th id="T_e1e29_level0_col1" class="col_heading level0 col1" >LOP2</th>
+      <th id="T_e1e29_level0_col2" class="col_heading level0 col2" >LOP3</th>
+      <th id="T_e1e29_level0_col3" class="col_heading level0 col3" >LOP4</th>
+      <th id="T_e1e29_level0_col4" class="col_heading level0 col4" >Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_e1e29_level0_row0" class="row_heading level0 row0" >Post</th>
+      <td id="T_e1e29_row0_col0" class="data row0 col0" >3.1</td>
+      <td id="T_e1e29_row0_col1" class="data row0 col1" >-</td>
+      <td id="T_e1e29_row0_col2" class="data row0 col2" >-</td>
+      <td id="T_e1e29_row0_col3" class="data row0 col3" >-</td>
+      <td id="T_e1e29_row0_col4" class="data row0 col4" >3.1</td>
+    </tr>
+    <tr>
+      <th id="T_e1e29_level0_row1" class="row_heading level0 row1" >Pre</th>
+      <td id="T_e1e29_row1_col0" class="data row1 col0" >-</td>
+      <td id="T_e1e29_row1_col1" class="data row1 col1" >-</td>
+      <td id="T_e1e29_row1_col2" class="data row1 col2" >-</td>
+      <td id="T_e1e29_row1_col3" class="data row1 col3" >-</td>
+      <td id="T_e1e29_row1_col4" class="data row1 col4" >-</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+            <div class="cb-stats col-2 text-center layer-stats-table"><style type="text/css">
+#T_2abaf th {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+#T_2abaf td {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+</style>
+<table id="T_2abaf">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_2abaf_level0_col0" class="col_heading level0 col0" >central brain</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_2abaf_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_2abaf_row0_col0" class="data row0 col0" >-</td>
+    </tr>
+    <tr>
+      <th id="T_2abaf_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_2abaf_row1_col0" class="data row1 col0" >-</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+            <h2 class="pad-left">Neuron visualizations</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="threeD_view">
+                    <iframe scrolling="no" frameborder="0" src="img/dynamic/Tm23_R.html"></iframe>
+                </div>
+            </div>
+            <div class="col">
+                <div class="gallery_video">
+                    <iframe frameborder="0" style="margin-left:0px; padding:0px;border:0px solid white;" allowfullscreen src="https://www.youtube.com/embed/byPiDi-XLss?autoplay=1&rel=0&color=white"></iframe>  
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h2 id="CoverageHeader">Population spatial coverage</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            
+                <div class="col">
+                    <div class="card">
+                        
+                        
+                        
+
+                        <header><h4 style="color: #5E184D;"><a href="scatterplots/scatterplots-ME.html">Medulla</a></h4></header>
+                        <p>Number of post synapses: 23</p>
+                        <p>Number of pre synapses: 2</p>
+                        <p>Number of output connections: 3</p>
+                        <p>Coverage factor: 1.1</p>
+                        <p>Columnar completeness: 0.01</p>
+                        <p>Area completeness: 0.14</p>
+                        <p>Cell size (columns): 1</p>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="card">
+                        
+                        
+                        
+
+                        <header><h4 style="color: #BB4A5F;"><a href="scatterplots/scatterplots-LO.html">Lobula</a></h4></header>
+                        <p>Number of post synapses: 28521</p>
+                        <p>Number of pre synapses: 5287</p>
+                        <p>Number of output connections: 28090</p>
+                        <p>Coverage factor: 1.7</p>
+                        <p>Columnar completeness: 0.99</p>
+                        <p>Area completeness: 0.99</p>
+                        <p>Cell size (columns): 81</p>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="card">
+                        
+                        
+                        
+
+                        <header><h4 style="color: #F16E65;"><a href="scatterplots/scatterplots-LOP.html">Lobula Plate</a></h4></header>
+                        <p>Number of post synapses: 50</p>
+                        <p>Number of pre synapses: 0</p>
+                        <p>Number of output connections: 0</p>
+                        <p>Coverage factor: 1.1</p>
+                        <p>Columnar completeness: 0.02</p>
+                        <p>Area completeness: 0.20</p>
+                        <p>Cell size (columns): 2</p>
+                    </div>
+                </div>
+            
+        </div>
+
+
+        
+            <div class="row">
+                <div class="col">
+        <figure>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2934 793" preserveAspectRatio="xMinYMin meet">
+            <image width="2834" height="793" xlink:href="img/Tm23_R_syn.png" />
+            <g class="hover_group" opacity="0.0">
+                <a xlink:href="scatterplots/scatterplots-LOP.html">
+                    <circle opacity="0.2" style="fill:#ffffff" cx="2225" cy="395" r="375" />
+                </a>
+            </g>
+            <g class="hover_group" opacity="0.0">
+                <a xlink:href="scatterplots/scatterplots-LO.html">
+                    <circle opacity="0.2" style="fill:#ffffff" cx="1325" cy="395" r="375" />
+                </a>
+            </g>
+            <g class="hover_group" opacity="0.0">
+                <a xlink:href="scatterplots/scatterplots-ME.html">
+                    <circle opacity="0.2" style="fill:#ffffff" cx="395" cy="395" r="375" />
+                </a>
+            </g>
+            </svg>
+        </figure>
+        </div>
+            </div>
+        
+            <div class="row">
+                <div class="col">
+        <figure>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2934 793" preserveAspectRatio="xMinYMin meet">
+            <image width="2834" height="793" xlink:href="img/Tm23_R_cell.png" />
+            <g class="hover_group" opacity="0">
+                <a xlink:href="scatterplots/scatterplots-LOP.html">
+                    <circle opacity="0.2" style="fill:#ffffff" cx="2225" cy="395" r="375" />
+                </a>
+            </g>
+            <g class="hover_group" opacity="0">
+                <a xlink:href="scatterplots/scatterplots-LO.html">
+                    <circle opacity="0.2" style="fill:#ffffff" cx="1325" cy="395" r="375" />
+                </a>
+            </g>
+            <g class="hover_group" opacity="0">
+                <a xlink:href="scatterplots/scatterplots-ME.html">
+                    <circle opacity="0.2" style="fill:#ffffff" cx="395" cy="395" r="375" />
+                </a>
+            </g>
+        </figure>
+        </div>
+            </div>
+        
+
+
+        <div class="row">
+            <div class="col">
+                <h2 id="OL-Connectivity-Header">Optic Lobe Connectivity</h2>
+                <div class="row">
+                    <div class="col-5 connectivity-table">
+                        <h3>Inputs</h4> 
+                        
+                            <style type="text/css">
+#T_0e662 td.col-1 {
+  font-weight: bold;
+}
+#T_0e662 td.col-1 {
+  font-weight: bold;
+}
+#T_0e662_row0_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 40.1%, transparent 40.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row0_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 40.4%, transparent 40.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row1_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 31.1%, transparent 31.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row1_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 71.8%, transparent 71.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row2_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 4.1%, transparent 4.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row2_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 75.9%, transparent 75.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row3_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 3.2%, transparent 3.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row3_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 79.1%, transparent 79.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row4_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 1.9%, transparent 1.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row4_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 81.0%, transparent 81.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row5_col4, #T_0e662_row6_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 1.8%, transparent 1.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row5_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 82.8%, transparent 82.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row6_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 84.6%, transparent 84.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row7_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 1.6%, transparent 1.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row7_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 86.3%, transparent 86.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row8_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 1.5%, transparent 1.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row8_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 87.7%, transparent 87.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row9_col4, #T_0e662_row10_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 1.4%, transparent 1.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row9_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 89.1%, transparent 89.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row10_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 90.5%, transparent 90.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row11_col4, #T_0e662_row12_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 0.9%, transparent 0.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row11_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 91.4%, transparent 91.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row12_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 92.3%, transparent 92.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row13_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 0.7%, transparent 0.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row13_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 93.0%, transparent 93.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row14_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 0.5%, transparent 0.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row14_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 93.5%, transparent 93.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row15_col4, #T_0e662_row16_col4, #T_0e662_row17_col4, #T_0e662_row18_col4, #T_0e662_row19_col4, #T_0e662_row20_col4, #T_0e662_row21_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 0.4%, transparent 0.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row15_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 94.0%, transparent 94.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row16_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 94.4%, transparent 94.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row17_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 94.9%, transparent 94.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row18_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 95.3%, transparent 95.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row19_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 95.7%, transparent 95.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row20_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 96.1%, transparent 96.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row21_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 96.4%, transparent 96.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row22_col4, #T_0e662_row23_col4, #T_0e662_row24_col4, #T_0e662_row25_col4, #T_0e662_row26_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 0.3%, transparent 0.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row22_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 96.7%, transparent 96.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row23_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 97.0%, transparent 97.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row24_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 97.3%, transparent 97.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row25_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 97.5%, transparent 97.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row26_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 97.8%, transparent 97.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row27_col4, #T_0e662_row28_col4, #T_0e662_row29_col4, #T_0e662_row30_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 0.2%, transparent 0.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row27_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 98.0%, transparent 98.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row28_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 98.2%, transparent 98.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row29_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 98.4%, transparent 98.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row30_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 98.5%, transparent 98.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row31_col4, #T_0e662_row32_col4, #T_0e662_row33_col4, #T_0e662_row34_col4, #T_0e662_row35_col4, #T_0e662_row36_col4, #T_0e662_row37_col4, #T_0e662_row38_col4, #T_0e662_row39_col4, #T_0e662_row40_col4, #T_0e662_row41_col4, #T_0e662_row42_col4, #T_0e662_row43_col4, #T_0e662_row44_col4, #T_0e662_row45_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #fee395 0.1%, transparent 0.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row31_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 98.7%, transparent 98.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row32_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 98.8%, transparent 98.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row33_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.0%, transparent 99.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row34_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.1%, transparent 99.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row35_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.2%, transparent 99.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row36_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.3%, transparent 99.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row37_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.4%, transparent 99.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row38_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.5%, transparent 99.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row39_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.6%, transparent 99.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row40_col5, #T_0e662_row41_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.7%, transparent 99.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row42_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.8%, transparent 99.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row43_col5, #T_0e662_row44_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 99.9%, transparent 99.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_0e662_row45_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #fed76a 100.0%, transparent 100.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+</style>
+<table id="T_0e662">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_0e662_level0_col0" class="col_heading level0 col0" >instance</th>
+      <th id="T_0e662_level0_col1" class="col_heading level0 col1" >NT</th>
+      <th id="T_0e662_level0_col2" class="col_heading level0 col2" >total connections</th>
+      <th id="T_0e662_level0_col3" class="col_heading level0 col3" >connections /#Tm23&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></th>
+      <th id="T_0e662_level0_col4" class="col_heading level0 col4" >%</th>
+      <th id="T_0e662_level0_col5" class="col_heading level0 col5" >% cumu.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_0e662_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_0e662_row0_col0" class="data row0 col0" ><a href="Tm3_R.html" class="connectivity-link txt_OL_connecting">Tm3&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row0_col1" class="data row0 col1" >ACh</td>
+      <td id="T_0e662_row0_col2" class="data row0 col2" >11,287</td>
+      <td id="T_0e662_row0_col3" class="data row0 col3" >705.4</td>
+      <td id="T_0e662_row0_col4" class="data row0 col4" >40.1%</td>
+      <td id="T_0e662_row0_col5" class="data row0 col5" >40.1%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_0e662_row1_col0" class="data row1 col0" ><a href="T5a_R.html" class="connectivity-link txt_OL_connecting">T5a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row1_col1" class="data row1 col1" >ACh</td>
+      <td id="T_0e662_row1_col2" class="data row1 col2" >8,752</td>
+      <td id="T_0e662_row1_col3" class="data row1 col3" >547.0</td>
+      <td id="T_0e662_row1_col4" class="data row1 col4" >31.1%</td>
+      <td id="T_0e662_row1_col5" class="data row1 col5" >71.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_0e662_row2_col0" class="data row2 col0" ><a href="Li29_R.html" class="connectivity-link txt_OL_intrinsic">Li29&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row2_col1" class="data row2 col1" >GABA</td>
+      <td id="T_0e662_row2_col2" class="data row2 col2" >1,146</td>
+      <td id="T_0e662_row2_col3" class="data row2 col3" >71.6</td>
+      <td id="T_0e662_row2_col4" class="data row2 col4" >4.1%</td>
+      <td id="T_0e662_row2_col5" class="data row2 col5" >75.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_0e662_row3_col0" class="data row3 col0" ><a href="TmY14_R.html" class="connectivity-link txt_OL_connecting">TmY14&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row3_col1" class="data row3 col1" >Glu</td>
+      <td id="T_0e662_row3_col2" class="data row3 col2" >898</td>
+      <td id="T_0e662_row3_col3" class="data row3 col3" >56.1</td>
+      <td id="T_0e662_row3_col4" class="data row3 col4" >3.2%</td>
+      <td id="T_0e662_row3_col5" class="data row3 col5" >78.4%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_0e662_row4_col0" class="data row4 col0" ><a href="MeVPLo1_L.html" class="connectivity-link txt_VPN">MeVPLo1&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_0e662_row4_col1" class="data row4 col1" >Glu</td>
+      <td id="T_0e662_row4_col2" class="data row4 col2" >542</td>
+      <td id="T_0e662_row4_col3" class="data row4 col3" >33.9</td>
+      <td id="T_0e662_row4_col4" class="data row4 col4" >1.9%</td>
+      <td id="T_0e662_row4_col5" class="data row4 col5" >80.3%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_0e662_row5_col0" class="data row5 col0" ><a href="Am1_R.html" class="connectivity-link txt_OL_connecting">Am1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row5_col1" class="data row5 col1" >GABA</td>
+      <td id="T_0e662_row5_col2" class="data row5 col2" >500</td>
+      <td id="T_0e662_row5_col3" class="data row5 col3" >31.2</td>
+      <td id="T_0e662_row5_col4" class="data row5 col4" >1.8%</td>
+      <td id="T_0e662_row5_col5" class="data row5 col5" >82.1%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row6" class="row_heading level0 row6" >6</th>
+      <td id="T_0e662_row6_col0" class="data row6 col0" ><a href="T5b_R.html" class="connectivity-link txt_OL_connecting">T5b&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row6_col1" class="data row6 col1" >ACh</td>
+      <td id="T_0e662_row6_col2" class="data row6 col2" >493</td>
+      <td id="T_0e662_row6_col3" class="data row6 col3" >30.8</td>
+      <td id="T_0e662_row6_col4" class="data row6 col4" >1.8%</td>
+      <td id="T_0e662_row6_col5" class="data row6 col5" >83.9%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row7" class="row_heading level0 row7" >7</th>
+      <td id="T_0e662_row7_col0" class="data row7 col0" ><a href="MeLo13_R.html" class="connectivity-link txt_OL_connecting">MeLo13&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row7_col1" class="data row7 col1" >Glu</td>
+      <td id="T_0e662_row7_col2" class="data row7 col2" >464</td>
+      <td id="T_0e662_row7_col3" class="data row7 col3" >29.0</td>
+      <td id="T_0e662_row7_col4" class="data row7 col4" >1.6%</td>
+      <td id="T_0e662_row7_col5" class="data row7 col5" >85.5%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row8" class="row_heading level0 row8" >8</th>
+      <td id="T_0e662_row8_col0" class="data row8 col0" ><a href="Tm2_R.html" class="connectivity-link txt_OL_connecting">Tm2&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row8_col1" class="data row8 col1" >ACh</td>
+      <td id="T_0e662_row8_col2" class="data row8 col2" >411</td>
+      <td id="T_0e662_row8_col3" class="data row8 col3" >25.7</td>
+      <td id="T_0e662_row8_col4" class="data row8 col4" >1.5%</td>
+      <td id="T_0e662_row8_col5" class="data row8 col5" >87.0%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row9" class="row_heading level0 row9" >9</th>
+      <td id="T_0e662_row9_col0" class="data row9 col0" ><a href="LoVC21_L.html" class="connectivity-link txt_VCN">LoVC21&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_0e662_row9_col1" class="data row9 col1" >GABA</td>
+      <td id="T_0e662_row9_col2" class="data row9 col2" >390</td>
+      <td id="T_0e662_row9_col3" class="data row9 col3" >24.4</td>
+      <td id="T_0e662_row9_col4" class="data row9 col4" >1.4%</td>
+      <td id="T_0e662_row9_col5" class="data row9 col5" >88.4%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row10" class="row_heading level0 row10" >10</th>
+      <td id="T_0e662_row10_col0" class="data row10 col0" ><a href="Tm4_R.html" class="connectivity-link txt_OL_connecting">Tm4&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row10_col1" class="data row10 col1" >ACh</td>
+      <td id="T_0e662_row10_col2" class="data row10 col2" >387</td>
+      <td id="T_0e662_row10_col3" class="data row10 col3" >24.2</td>
+      <td id="T_0e662_row10_col4" class="data row10 col4" >1.4%</td>
+      <td id="T_0e662_row10_col5" class="data row10 col5" >89.7%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row11" class="row_heading level0 row11" >11</th>
+      <td id="T_0e662_row11_col0" class="data row11 col0" ><a href="MeVPLo1_R.html" class="connectivity-link txt_VPN">MeVPLo1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row11_col1" class="data row11 col1" >Glu</td>
+      <td id="T_0e662_row11_col2" class="data row11 col2" >256</td>
+      <td id="T_0e662_row11_col3" class="data row11 col3" >16.0</td>
+      <td id="T_0e662_row11_col4" class="data row11 col4" >0.9%</td>
+      <td id="T_0e662_row11_col5" class="data row11 col5" >90.6%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row12" class="row_heading level0 row12" >12</th>
+      <td id="T_0e662_row12_col0" class="data row12 col0" ><a href="Tm1_R.html" class="connectivity-link txt_OL_connecting">Tm1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row12_col1" class="data row12 col1" >ACh</td>
+      <td id="T_0e662_row12_col2" class="data row12 col2" >252</td>
+      <td id="T_0e662_row12_col3" class="data row12 col3" >15.8</td>
+      <td id="T_0e662_row12_col4" class="data row12 col4" >0.9%</td>
+      <td id="T_0e662_row12_col5" class="data row12 col5" >91.5%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row13" class="row_heading level0 row13" >13</th>
+      <td id="T_0e662_row13_col0" class="data row13 col0" ><a href="Tm9_R.html" class="connectivity-link txt_OL_connecting">Tm9&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row13_col1" class="data row13 col1" >ACh</td>
+      <td id="T_0e662_row13_col2" class="data row13 col2" >197</td>
+      <td id="T_0e662_row13_col3" class="data row13 col3" >12.3</td>
+      <td id="T_0e662_row13_col4" class="data row13 col4" >0.7%</td>
+      <td id="T_0e662_row13_col5" class="data row13 col5" >92.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row14" class="row_heading level0 row14" >14</th>
+      <td id="T_0e662_row14_col0" class="data row14 col0" ><a href="T5c_R.html" class="connectivity-link txt_OL_connecting">T5c&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row14_col1" class="data row14 col1" >ACh</td>
+      <td id="T_0e662_row14_col2" class="data row14 col2" >136</td>
+      <td id="T_0e662_row14_col3" class="data row14 col3" >8.5</td>
+      <td id="T_0e662_row14_col4" class="data row14 col4" >0.5%</td>
+      <td id="T_0e662_row14_col5" class="data row14 col5" >92.7%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row15" class="row_heading level0 row15" >15</th>
+      <td id="T_0e662_row15_col0" class="data row15 col0" ><a href="LoVC24_R.html" class="connectivity-link txt_VCN">LoVC24&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row15_col1" class="data row15 col1" >GABA</td>
+      <td id="T_0e662_row15_col2" class="data row15 col2" >125</td>
+      <td id="T_0e662_row15_col3" class="data row15 col3" >7.8</td>
+      <td id="T_0e662_row15_col4" class="data row15 col4" >0.4%</td>
+      <td id="T_0e662_row15_col5" class="data row15 col5" >93.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row16" class="row_heading level0 row16" >16</th>
+      <td id="T_0e662_row16_col0" class="data row16 col0" ><a href="TmY15_R.html" class="connectivity-link txt_OL_connecting">TmY15&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row16_col1" class="data row16 col1" >GABA</td>
+      <td id="T_0e662_row16_col2" class="data row16 col2" >123</td>
+      <td id="T_0e662_row16_col3" class="data row16 col3" >7.7</td>
+      <td id="T_0e662_row16_col4" class="data row16 col4" >0.4%</td>
+      <td id="T_0e662_row16_col5" class="data row16 col5" >93.6%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row17" class="row_heading level0 row17" >17</th>
+      <td id="T_0e662_row17_col0" class="data row17 col0" ><a href="TmY19a_R.html" class="connectivity-link txt_OL_connecting">TmY19a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row17_col1" class="data row17 col1" >GABA</td>
+      <td id="T_0e662_row17_col2" class="data row17 col2" >122</td>
+      <td id="T_0e662_row17_col3" class="data row17 col3" >7.6</td>
+      <td id="T_0e662_row17_col4" class="data row17 col4" >0.4%</td>
+      <td id="T_0e662_row17_col5" class="data row17 col5" >94.0%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row18" class="row_heading level0 row18" >18</th>
+      <td id="T_0e662_row18_col0" class="data row18 col0" ><a href="OLVC3_L.html" class="connectivity-link txt_VCN">OLVC3&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_0e662_row18_col1" class="data row18 col1" >ACh</td>
+      <td id="T_0e662_row18_col2" class="data row18 col2" >119</td>
+      <td id="T_0e662_row18_col3" class="data row18 col3" >7.4</td>
+      <td id="T_0e662_row18_col4" class="data row18 col4" >0.4%</td>
+      <td id="T_0e662_row18_col5" class="data row18 col5" >94.5%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row19" class="row_heading level0 row19" >19</th>
+      <td id="T_0e662_row19_col0" class="data row19 col0" ><a href="T5d_R.html" class="connectivity-link txt_OL_connecting">T5d&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row19_col1" class="data row19 col1" >ACh</td>
+      <td id="T_0e662_row19_col2" class="data row19 col2" >113</td>
+      <td id="T_0e662_row19_col3" class="data row19 col3" >7.1</td>
+      <td id="T_0e662_row19_col4" class="data row19 col4" >0.4%</td>
+      <td id="T_0e662_row19_col5" class="data row19 col5" >94.9%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row20" class="row_heading level0 row20" >20</th>
+      <td id="T_0e662_row20_col0" class="data row20 col0" ><a href="TmY5a_R.html" class="connectivity-link txt_OL_connecting">TmY5a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row20_col1" class="data row20 col1" >Glu</td>
+      <td id="T_0e662_row20_col2" class="data row20 col2" >102</td>
+      <td id="T_0e662_row20_col3" class="data row20 col3" >6.4</td>
+      <td id="T_0e662_row20_col4" class="data row20 col4" >0.4%</td>
+      <td id="T_0e662_row20_col5" class="data row20 col5" >95.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row21" class="row_heading level0 row21" >21</th>
+      <td id="T_0e662_row21_col0" class="data row21 col0" ><a href="TmY3_R.html" class="connectivity-link txt_OL_connecting">TmY3&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row21_col1" class="data row21 col1" >ACh</td>
+      <td id="T_0e662_row21_col2" class="data row21 col2" >99</td>
+      <td id="T_0e662_row21_col3" class="data row21 col3" >6.2</td>
+      <td id="T_0e662_row21_col4" class="data row21 col4" >0.4%</td>
+      <td id="T_0e662_row21_col5" class="data row21 col5" >95.6%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row22" class="row_heading level0 row22" >22</th>
+      <td id="T_0e662_row22_col0" class="data row22 col0" ><a href="Li38_L.html" class="connectivity-link txt_OL_intrinsic">Li38&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_0e662_row22_col1" class="data row22 col1" >GABA</td>
+      <td id="T_0e662_row22_col2" class="data row22 col2" >92</td>
+      <td id="T_0e662_row22_col3" class="data row22 col3" >5.8</td>
+      <td id="T_0e662_row22_col4" class="data row22 col4" >0.3%</td>
+      <td id="T_0e662_row22_col5" class="data row22 col5" >95.9%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row23" class="row_heading level0 row23" >23</th>
+      <td id="T_0e662_row23_col0" class="data row23 col0" ><a href="Li17_R.html" class="connectivity-link txt_OL_intrinsic">Li17&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row23_col1" class="data row23 col1" >GABA</td>
+      <td id="T_0e662_row23_col2" class="data row23 col2" >77</td>
+      <td id="T_0e662_row23_col3" class="data row23 col3" >4.8</td>
+      <td id="T_0e662_row23_col4" class="data row23 col4" >0.3%</td>
+      <td id="T_0e662_row23_col5" class="data row23 col5" >96.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row24" class="row_heading level0 row24" >24</th>
+      <td id="T_0e662_row24_col0" class="data row24 col0" ><a href="MeLo8_R.html" class="connectivity-link txt_OL_connecting">MeLo8&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row24_col1" class="data row24 col1" >GABA</td>
+      <td id="T_0e662_row24_col2" class="data row24 col2" >72</td>
+      <td id="T_0e662_row24_col3" class="data row24 col3" >4.5</td>
+      <td id="T_0e662_row24_col4" class="data row24 col4" >0.3%</td>
+      <td id="T_0e662_row24_col5" class="data row24 col5" >96.4%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row25" class="row_heading level0 row25" >25</th>
+      <td id="T_0e662_row25_col0" class="data row25 col0" ><a href="MeVC26_L.html" class="connectivity-link txt_VCN">MeVC26&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_0e662_row25_col1" class="data row25 col1" >ACh</td>
+      <td id="T_0e662_row25_col2" class="data row25 col2" >72</td>
+      <td id="T_0e662_row25_col3" class="data row25 col3" >4.5</td>
+      <td id="T_0e662_row25_col4" class="data row25 col4" >0.3%</td>
+      <td id="T_0e662_row25_col5" class="data row25 col5" >96.7%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row26" class="row_heading level0 row26" >26</th>
+      <td id="T_0e662_row26_col0" class="data row26 col0" ><a href="T2_R.html" class="connectivity-link txt_OL_connecting">T2&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row26_col1" class="data row26 col1" >ACh</td>
+      <td id="T_0e662_row26_col2" class="data row26 col2" >72</td>
+      <td id="T_0e662_row26_col3" class="data row26 col3" >4.5</td>
+      <td id="T_0e662_row26_col4" class="data row26 col4" >0.3%</td>
+      <td id="T_0e662_row26_col5" class="data row26 col5" >96.9%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row27" class="row_heading level0 row27" >27</th>
+      <td id="T_0e662_row27_col0" class="data row27 col0" ><a href="MeVC25_R.html" class="connectivity-link txt_VCN">MeVC25&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row27_col1" class="data row27 col1" >Glu</td>
+      <td id="T_0e662_row27_col2" class="data row27 col2" >66</td>
+      <td id="T_0e662_row27_col3" class="data row27 col3" >4.1</td>
+      <td id="T_0e662_row27_col4" class="data row27 col4" >0.2%</td>
+      <td id="T_0e662_row27_col5" class="data row27 col5" >97.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row28" class="row_heading level0 row28" >28</th>
+      <td id="T_0e662_row28_col0" class="data row28 col0" ><a href="Li30_R.html" class="connectivity-link txt_OL_intrinsic">Li30&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row28_col1" class="data row28 col1" >GABA</td>
+      <td id="T_0e662_row28_col2" class="data row28 col2" >49</td>
+      <td id="T_0e662_row28_col3" class="data row28 col3" >3.1</td>
+      <td id="T_0e662_row28_col4" class="data row28 col4" >0.2%</td>
+      <td id="T_0e662_row28_col5" class="data row28 col5" >97.3%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row29" class="row_heading level0 row29" >29</th>
+      <td id="T_0e662_row29_col0" class="data row29 col0" ><a href="LT11_R.html" class="connectivity-link txt_VPN">LT11&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row29_col1" class="data row29 col1" >GABA</td>
+      <td id="T_0e662_row29_col2" class="data row29 col2" >48</td>
+      <td id="T_0e662_row29_col3" class="data row29 col3" >3.0</td>
+      <td id="T_0e662_row29_col4" class="data row29 col4" >0.2%</td>
+      <td id="T_0e662_row29_col5" class="data row29 col5" >97.5%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row30" class="row_heading level0 row30" >30</th>
+      <td id="T_0e662_row30_col0" class="data row30 col0" ><a href="Li28_R.html" class="connectivity-link txt_OL_intrinsic">Li28&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row30_col1" class="data row30 col1" >GABA</td>
+      <td id="T_0e662_row30_col2" class="data row30 col2" >43</td>
+      <td id="T_0e662_row30_col3" class="data row30 col3" >2.7</td>
+      <td id="T_0e662_row30_col4" class="data row30 col4" >0.2%</td>
+      <td id="T_0e662_row30_col5" class="data row30 col5" >97.7%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row31" class="row_heading level0 row31" >31</th>
+      <td id="T_0e662_row31_col0" class="data row31 col0" ><a href="Li25_R.html" class="connectivity-link txt_OL_intrinsic">Li25&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row31_col1" class="data row31 col1" >GABA</td>
+      <td id="T_0e662_row31_col2" class="data row31 col2" >42</td>
+      <td id="T_0e662_row31_col3" class="data row31 col3" >2.6</td>
+      <td id="T_0e662_row31_col4" class="data row31 col4" >0.1%</td>
+      <td id="T_0e662_row31_col5" class="data row31 col5" >97.8%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row32" class="row_heading level0 row32" >32</th>
+      <td id="T_0e662_row32_col0" class="data row32 col0" ><a href="Tm23_R.html" class="connectivity-link txt_OL_intrinsic">Tm23&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row32_col1" class="data row32 col1" >GABA</td>
+      <td id="T_0e662_row32_col2" class="data row32 col2" >42</td>
+      <td id="T_0e662_row32_col3" class="data row32 col3" >2.6</td>
+      <td id="T_0e662_row32_col4" class="data row32 col4" >0.1%</td>
+      <td id="T_0e662_row32_col5" class="data row32 col5" >98.0%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row33" class="row_heading level0 row33" >33</th>
+      <td id="T_0e662_row33_col0" class="data row33 col0" ><a href="LPT113_R.html" class="connectivity-link txt_VCN">LPT113&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row33_col1" class="data row33 col1" >GABA</td>
+      <td id="T_0e662_row33_col2" class="data row33 col2" >41</td>
+      <td id="T_0e662_row33_col3" class="data row33 col3" >2.6</td>
+      <td id="T_0e662_row33_col4" class="data row33 col4" >0.1%</td>
+      <td id="T_0e662_row33_col5" class="data row33 col5" >98.1%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row34" class="row_heading level0 row34" >34</th>
+      <td id="T_0e662_row34_col0" class="data row34 col0" ><a href="LPT112_R.html" class="connectivity-link txt_VCN">LPT112&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row34_col1" class="data row34 col1" >GABA</td>
+      <td id="T_0e662_row34_col2" class="data row34 col2" >33</td>
+      <td id="T_0e662_row34_col3" class="data row34 col3" >2.1</td>
+      <td id="T_0e662_row34_col4" class="data row34 col4" >0.1%</td>
+      <td id="T_0e662_row34_col5" class="data row34 col5" >98.2%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row35" class="row_heading level0 row35" >35</th>
+      <td id="T_0e662_row35_col0" class="data row35 col0" ><a href="OA-AL2i1_R.html" class="connectivity-link txt_VCN">OA-AL2i1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row35_col1" class="data row35 col1" >OA</td>
+      <td id="T_0e662_row35_col2" class="data row35 col2" >33</td>
+      <td id="T_0e662_row35_col3" class="data row35 col3" >2.1</td>
+      <td id="T_0e662_row35_col4" class="data row35 col4" >0.1%</td>
+      <td id="T_0e662_row35_col5" class="data row35 col5" >98.3%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row36" class="row_heading level0 row36" >36</th>
+      <td id="T_0e662_row36_col0" class="data row36 col0" ><a href="LPT111_R.html" class="connectivity-link txt_VCN">LPT111&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row36_col1" class="data row36 col1" >GABA</td>
+      <td id="T_0e662_row36_col2" class="data row36 col2" >32</td>
+      <td id="T_0e662_row36_col3" class="data row36 col3" >2.0</td>
+      <td id="T_0e662_row36_col4" class="data row36 col4" >0.1%</td>
+      <td id="T_0e662_row36_col5" class="data row36 col5" >98.5%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row37" class="row_heading level0 row37" >37</th>
+      <td id="T_0e662_row37_col0" class="data row37 col0" ><a href="LT33_L.html" class="connectivity-link txt_OL_intrinsic">LT33&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_0e662_row37_col1" class="data row37 col1" >GABA</td>
+      <td id="T_0e662_row37_col2" class="data row37 col2" >27</td>
+      <td id="T_0e662_row37_col3" class="data row37 col3" >1.7</td>
+      <td id="T_0e662_row37_col4" class="data row37 col4" >0.1%</td>
+      <td id="T_0e662_row37_col5" class="data row37 col5" >98.6%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row38" class="row_heading level0 row38" >38</th>
+      <td id="T_0e662_row38_col0" class="data row38 col0" ><a href="LPi4a_R.html" class="connectivity-link txt_OL_intrinsic">LPi4a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row38_col1" class="data row38 col1" >Glu</td>
+      <td id="T_0e662_row38_col2" class="data row38 col2" >24</td>
+      <td id="T_0e662_row38_col3" class="data row38 col3" >1.5</td>
+      <td id="T_0e662_row38_col4" class="data row38 col4" >0.1%</td>
+      <td id="T_0e662_row38_col5" class="data row38 col5" >98.6%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row39" class="row_heading level0 row39" >39</th>
+      <td id="T_0e662_row39_col0" class="data row39 col0" ><a href="MeLo14_R.html" class="connectivity-link txt_OL_connecting">MeLo14&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row39_col1" class="data row39 col1" >Glu</td>
+      <td id="T_0e662_row39_col2" class="data row39 col2" >24</td>
+      <td id="T_0e662_row39_col3" class="data row39 col3" >1.5</td>
+      <td id="T_0e662_row39_col4" class="data row39 col4" >0.1%</td>
+      <td id="T_0e662_row39_col5" class="data row39 col5" >98.7%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row40" class="row_heading level0 row40" >40</th>
+      <td id="T_0e662_row40_col0" class="data row40 col0" ><a href="Tm12_R.html" class="connectivity-link txt_OL_connecting">Tm12&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row40_col1" class="data row40 col1" >ACh</td>
+      <td id="T_0e662_row40_col2" class="data row40 col2" >23</td>
+      <td id="T_0e662_row40_col3" class="data row40 col3" >1.4</td>
+      <td id="T_0e662_row40_col4" class="data row40 col4" >0.1%</td>
+      <td id="T_0e662_row40_col5" class="data row40 col5" >98.8%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row41" class="row_heading level0 row41" >41</th>
+      <td id="T_0e662_row41_col0" class="data row41 col0" ><a href="Tm37_R.html" class="connectivity-link txt_OL_connecting">Tm37&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row41_col1" class="data row41 col1" >Glu</td>
+      <td id="T_0e662_row41_col2" class="data row41 col2" >21</td>
+      <td id="T_0e662_row41_col3" class="data row41 col3" >1.3</td>
+      <td id="T_0e662_row41_col4" class="data row41 col4" >0.1%</td>
+      <td id="T_0e662_row41_col5" class="data row41 col5" >98.9%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row42" class="row_heading level0 row42" >42</th>
+      <td id="T_0e662_row42_col0" class="data row42 col0" ><a href="TmY18_R.html" class="connectivity-link txt_OL_connecting">TmY18&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row42_col1" class="data row42 col1" >ACh</td>
+      <td id="T_0e662_row42_col2" class="data row42 col2" >19</td>
+      <td id="T_0e662_row42_col3" class="data row42 col3" >1.2</td>
+      <td id="T_0e662_row42_col4" class="data row42 col4" >0.1%</td>
+      <td id="T_0e662_row42_col5" class="data row42 col5" >99.0%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row43" class="row_heading level0 row43" >43</th>
+      <td id="T_0e662_row43_col0" class="data row43 col0" ><a href="LPLC1_R.html" class="connectivity-link txt_VPN">LPLC1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row43_col1" class="data row43 col1" >ACh</td>
+      <td id="T_0e662_row43_col2" class="data row43 col2" >18</td>
+      <td id="T_0e662_row43_col3" class="data row43 col3" >1.1</td>
+      <td id="T_0e662_row43_col4" class="data row43 col4" >0.1%</td>
+      <td id="T_0e662_row43_col5" class="data row43 col5" >99.0%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row44" class="row_heading level0 row44" >44</th>
+      <td id="T_0e662_row44_col0" class="data row44 col0" ><a href="LoVC13_R.html" class="connectivity-link txt_VCN">LoVC13&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_0e662_row44_col1" class="data row44 col1" >GABA</td>
+      <td id="T_0e662_row44_col2" class="data row44 col2" >17</td>
+      <td id="T_0e662_row44_col3" class="data row44 col3" >1.1</td>
+      <td id="T_0e662_row44_col4" class="data row44 col4" >0.1%</td>
+      <td id="T_0e662_row44_col5" class="data row44 col5" >99.1%</td>
+    </tr>
+    <tr>
+      <th id="T_0e662_level0_row45" class="row_heading level0 row45" >45</th>
+      <td id="T_0e662_row45_col0" class="data row45 col0" ><a href="CT1_L.html" class="connectivity-link txt_OL_connecting">CT1&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_0e662_row45_col1" class="data row45 col1" >GABA</td>
+      <td id="T_0e662_row45_col2" class="data row45 col2" >16</td>
+      <td id="T_0e662_row45_col3" class="data row45 col3" >1.0</td>
+      <td id="T_0e662_row45_col4" class="data row45 col4" >0.1%</td>
+      <td id="T_0e662_row45_col5" class="data row45 col5" >99.1%</td>
+    </tr>
+  </tbody>
+</table>
+
+                        
+                    </div>
+                    <div class="col-1" style="border-right: 1px solid #000;"></div>
+                    <div class="col-5 connectivity-table">
+                        <h3>Outputs</h4> 
+                        
+                            <style type="text/css">
+#T_210ae td.col-1 {
+  font-weight: bold;
+}
+#T_210ae td.col-1 {
+  font-weight: bold;
+}
+#T_210ae_row0_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 21.5%, transparent 21.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row0_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 21.7%, transparent 21.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row1_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 19.4%, transparent 19.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row1_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 41.3%, transparent 41.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row2_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 17.7%, transparent 17.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row2_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 59.2%, transparent 59.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row3_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 14.6%, transparent 14.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row3_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 73.9%, transparent 73.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row4_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 3.5%, transparent 3.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row4_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 77.5%, transparent 77.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row5_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 3.0%, transparent 3.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row5_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 80.5%, transparent 80.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row6_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 2.2%, transparent 2.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row6_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 82.8%, transparent 82.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row7_col4, #T_210ae_row8_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 2.1%, transparent 2.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row7_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 84.9%, transparent 84.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row8_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 86.9%, transparent 86.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row9_col4, #T_210ae_row10_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 1.6%, transparent 1.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row9_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 88.6%, transparent 88.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row10_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 90.2%, transparent 90.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row11_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 1.3%, transparent 1.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row11_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 91.5%, transparent 91.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row12_col4, #T_210ae_row13_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.8%, transparent 0.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row12_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 92.4%, transparent 92.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row13_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 93.2%, transparent 93.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row14_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.7%, transparent 0.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row14_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 93.8%, transparent 93.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row15_col4, #T_210ae_row16_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.6%, transparent 0.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row15_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 94.5%, transparent 94.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row16_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 95.1%, transparent 95.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row17_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.5%, transparent 0.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row17_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 95.6%, transparent 95.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row18_col4, #T_210ae_row19_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.4%, transparent 0.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row18_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 96.0%, transparent 96.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row19_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 96.4%, transparent 96.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row20_col4, #T_210ae_row21_col4, #T_210ae_row22_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.3%, transparent 0.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row20_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 96.7%, transparent 96.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row21_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 97.0%, transparent 97.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row22_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 97.3%, transparent 97.3%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row23_col4, #T_210ae_row24_col4, #T_210ae_row25_col4, #T_210ae_row26_col4, #T_210ae_row27_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.2%, transparent 0.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row23_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 97.6%, transparent 97.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row24_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 97.8%, transparent 97.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row25_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 98.0%, transparent 98.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row26_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 98.2%, transparent 98.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row27_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 98.4%, transparent 98.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row28_col4, #T_210ae_row29_col4, #T_210ae_row30_col4, #T_210ae_row31_col4, #T_210ae_row32_col4, #T_210ae_row33_col4, #T_210ae_row34_col4, #T_210ae_row35_col4, #T_210ae_row36_col4, #T_210ae_row37_col4, #T_210ae_row38_col4, #T_210ae_row39_col4, #T_210ae_row40_col4, #T_210ae_row41_col4, #T_210ae_row42_col4, #T_210ae_row43_col4 {
+  width: 10em;
+  background: linear-gradient(90deg, #9bdfed 0.1%, transparent 0.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row28_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 98.5%, transparent 98.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row29_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 98.7%, transparent 98.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row30_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 98.8%, transparent 98.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row31_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 98.9%, transparent 98.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row32_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.0%, transparent 99.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row33_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.1%, transparent 99.1%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row34_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.2%, transparent 99.2%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row35_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.4%, transparent 99.4%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row36_col5, #T_210ae_row37_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.5%, transparent 99.5%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row38_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.6%, transparent 99.6%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row39_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.7%, transparent 99.7%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row40_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.8%, transparent 99.8%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row41_col5, #T_210ae_row42_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 99.9%, transparent 99.9%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+#T_210ae_row43_col5 {
+  width: 10em;
+  background: linear-gradient(90deg, #69d0e4 100.0%, transparent 100.0%) no-repeat center;
+  background-size: 100% 95.0%;
+}
+</style>
+<table id="T_210ae">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_210ae_level0_col0" class="col_heading level0 col0" >instance</th>
+      <th id="T_210ae_level0_col1" class="col_heading level0 col1" >NT</th>
+      <th id="T_210ae_level0_col2" class="col_heading level0 col2" >total connections</th>
+      <th id="T_210ae_level0_col3" class="col_heading level0 col3" >connections /#Tm23&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></th>
+      <th id="T_210ae_level0_col4" class="col_heading level0 col4" >%</th>
+      <th id="T_210ae_level0_col5" class="col_heading level0 col5" >% cumu.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_210ae_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_210ae_row0_col0" class="data row0 col0" ><a href="T5c_R.html" class="connectivity-link txt_OL_connecting">T5c&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row0_col1" class="data row0 col1" >ACh</td>
+      <td id="T_210ae_row0_col2" class="data row0 col2" >6,044</td>
+      <td id="T_210ae_row0_col3" class="data row0 col3" >377.8</td>
+      <td id="T_210ae_row0_col4" class="data row0 col4" >21.5%</td>
+      <td id="T_210ae_row0_col5" class="data row0 col5" >21.5%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_210ae_row1_col0" class="data row1 col0" ><a href="T5b_R.html" class="connectivity-link txt_OL_connecting">T5b&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row1_col1" class="data row1 col1" >ACh</td>
+      <td id="T_210ae_row1_col2" class="data row1 col2" >5,455</td>
+      <td id="T_210ae_row1_col3" class="data row1 col3" >340.9</td>
+      <td id="T_210ae_row1_col4" class="data row1 col4" >19.4%</td>
+      <td id="T_210ae_row1_col5" class="data row1 col5" >40.9%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_210ae_row2_col0" class="data row2 col0" ><a href="T5d_R.html" class="connectivity-link txt_OL_connecting">T5d&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row2_col1" class="data row2 col1" >ACh</td>
+      <td id="T_210ae_row2_col2" class="data row2 col2" >4,979</td>
+      <td id="T_210ae_row2_col3" class="data row2 col3" >311.2</td>
+      <td id="T_210ae_row2_col4" class="data row2 col4" >17.7%</td>
+      <td id="T_210ae_row2_col5" class="data row2 col5" >58.5%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_210ae_row3_col0" class="data row3 col0" ><a href="T5a_R.html" class="connectivity-link txt_OL_connecting">T5a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row3_col1" class="data row3 col1" >ACh</td>
+      <td id="T_210ae_row3_col2" class="data row3 col2" >4,110</td>
+      <td id="T_210ae_row3_col3" class="data row3 col3" >256.9</td>
+      <td id="T_210ae_row3_col4" class="data row3 col4" >14.6%</td>
+      <td id="T_210ae_row3_col5" class="data row3 col5" >73.2%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_210ae_row4_col0" class="data row4 col0" ><a href="Tm9_R.html" class="connectivity-link txt_OL_connecting">Tm9&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row4_col1" class="data row4 col1" >ACh</td>
+      <td id="T_210ae_row4_col2" class="data row4 col2" >994</td>
+      <td id="T_210ae_row4_col3" class="data row4 col3" >62.1</td>
+      <td id="T_210ae_row4_col4" class="data row4 col4" >3.5%</td>
+      <td id="T_210ae_row4_col5" class="data row4 col5" >76.7%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_210ae_row5_col0" class="data row5 col0" ><a href="Tm1_R.html" class="connectivity-link txt_OL_connecting">Tm1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row5_col1" class="data row5 col1" >ACh</td>
+      <td id="T_210ae_row5_col2" class="data row5 col2" >839</td>
+      <td id="T_210ae_row5_col3" class="data row5 col3" >52.4</td>
+      <td id="T_210ae_row5_col4" class="data row5 col4" >3.0%</td>
+      <td id="T_210ae_row5_col5" class="data row5 col5" >79.7%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row6" class="row_heading level0 row6" >6</th>
+      <td id="T_210ae_row6_col0" class="data row6 col0" ><a href="LT33_L.html" class="connectivity-link txt_OL_intrinsic">LT33&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_210ae_row6_col1" class="data row6 col1" >GABA</td>
+      <td id="T_210ae_row6_col2" class="data row6 col2" >633</td>
+      <td id="T_210ae_row6_col3" class="data row6 col3" >39.6</td>
+      <td id="T_210ae_row6_col4" class="data row6 col4" >2.2%</td>
+      <td id="T_210ae_row6_col5" class="data row6 col5" >81.9%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row7" class="row_heading level0 row7" >7</th>
+      <td id="T_210ae_row7_col0" class="data row7 col0" ><a href="TmY14_R.html" class="connectivity-link txt_OL_connecting">TmY14&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row7_col1" class="data row7 col1" >Glu</td>
+      <td id="T_210ae_row7_col2" class="data row7 col2" >582</td>
+      <td id="T_210ae_row7_col3" class="data row7 col3" >36.4</td>
+      <td id="T_210ae_row7_col4" class="data row7 col4" >2.1%</td>
+      <td id="T_210ae_row7_col5" class="data row7 col5" >84.0%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row8" class="row_heading level0 row8" >8</th>
+      <td id="T_210ae_row8_col0" class="data row8 col0" ><a href="Tm12_R.html" class="connectivity-link txt_OL_connecting">Tm12&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row8_col1" class="data row8 col1" >ACh</td>
+      <td id="T_210ae_row8_col2" class="data row8 col2" >577</td>
+      <td id="T_210ae_row8_col3" class="data row8 col3" >36.1</td>
+      <td id="T_210ae_row8_col4" class="data row8 col4" >2.1%</td>
+      <td id="T_210ae_row8_col5" class="data row8 col5" >86.0%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row9" class="row_heading level0 row9" >9</th>
+      <td id="T_210ae_row9_col0" class="data row9 col0" ><a href="T2_R.html" class="connectivity-link txt_OL_connecting">T2&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row9_col1" class="data row9 col1" >ACh</td>
+      <td id="T_210ae_row9_col2" class="data row9 col2" >461</td>
+      <td id="T_210ae_row9_col3" class="data row9 col3" >28.8</td>
+      <td id="T_210ae_row9_col4" class="data row9 col4" >1.6%</td>
+      <td id="T_210ae_row9_col5" class="data row9 col5" >87.7%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row10" class="row_heading level0 row10" >10</th>
+      <td id="T_210ae_row10_col0" class="data row10 col0" ><a href="Tm4_R.html" class="connectivity-link txt_OL_connecting">Tm4&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row10_col1" class="data row10 col1" >ACh</td>
+      <td id="T_210ae_row10_col2" class="data row10 col2" >459</td>
+      <td id="T_210ae_row10_col3" class="data row10 col3" >28.7</td>
+      <td id="T_210ae_row10_col4" class="data row10 col4" >1.6%</td>
+      <td id="T_210ae_row10_col5" class="data row10 col5" >89.3%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row11" class="row_heading level0 row11" >11</th>
+      <td id="T_210ae_row11_col0" class="data row11 col0" ><a href="LPLC1_R.html" class="connectivity-link txt_VPN">LPLC1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row11_col1" class="data row11 col1" >ACh</td>
+      <td id="T_210ae_row11_col2" class="data row11 col2" >361</td>
+      <td id="T_210ae_row11_col3" class="data row11 col3" >22.6</td>
+      <td id="T_210ae_row11_col4" class="data row11 col4" >1.3%</td>
+      <td id="T_210ae_row11_col5" class="data row11 col5" >90.6%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row12" class="row_heading level0 row12" >12</th>
+      <td id="T_210ae_row12_col0" class="data row12 col0" ><a href="TmY15_R.html" class="connectivity-link txt_OL_connecting">TmY15&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row12_col1" class="data row12 col1" >GABA</td>
+      <td id="T_210ae_row12_col2" class="data row12 col2" >237</td>
+      <td id="T_210ae_row12_col3" class="data row12 col3" >14.8</td>
+      <td id="T_210ae_row12_col4" class="data row12 col4" >0.8%</td>
+      <td id="T_210ae_row12_col5" class="data row12 col5" >91.4%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row13" class="row_heading level0 row13" >13</th>
+      <td id="T_210ae_row13_col0" class="data row13 col0" ><a href="Tm37_R.html" class="connectivity-link txt_OL_connecting">Tm37&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row13_col1" class="data row13 col1" >Glu</td>
+      <td id="T_210ae_row13_col2" class="data row13 col2" >219</td>
+      <td id="T_210ae_row13_col3" class="data row13 col3" >13.7</td>
+      <td id="T_210ae_row13_col4" class="data row13 col4" >0.8%</td>
+      <td id="T_210ae_row13_col5" class="data row13 col5" >92.2%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row14" class="row_heading level0 row14" >14</th>
+      <td id="T_210ae_row14_col0" class="data row14 col0" ><a href="T3_R.html" class="connectivity-link txt_OL_connecting">T3&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row14_col1" class="data row14 col1" >ACh</td>
+      <td id="T_210ae_row14_col2" class="data row14 col2" >190</td>
+      <td id="T_210ae_row14_col3" class="data row14 col3" >11.9</td>
+      <td id="T_210ae_row14_col4" class="data row14 col4" >0.7%</td>
+      <td id="T_210ae_row14_col5" class="data row14 col5" >92.9%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row15" class="row_heading level0 row15" >15</th>
+      <td id="T_210ae_row15_col0" class="data row15 col0" ><a href="Tm3_R.html" class="connectivity-link txt_OL_connecting">Tm3&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row15_col1" class="data row15 col1" >ACh</td>
+      <td id="T_210ae_row15_col2" class="data row15 col2" >180</td>
+      <td id="T_210ae_row15_col3" class="data row15 col3" >11.2</td>
+      <td id="T_210ae_row15_col4" class="data row15 col4" >0.6%</td>
+      <td id="T_210ae_row15_col5" class="data row15 col5" >93.5%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row16" class="row_heading level0 row16" >16</th>
+      <td id="T_210ae_row16_col0" class="data row16 col0" ><a href="Tm2_R.html" class="connectivity-link txt_OL_connecting">Tm2&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row16_col1" class="data row16 col1" >ACh</td>
+      <td id="T_210ae_row16_col2" class="data row16 col2" >175</td>
+      <td id="T_210ae_row16_col3" class="data row16 col3" >10.9</td>
+      <td id="T_210ae_row16_col4" class="data row16 col4" >0.6%</td>
+      <td id="T_210ae_row16_col5" class="data row16 col5" >94.1%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row17" class="row_heading level0 row17" >17</th>
+      <td id="T_210ae_row17_col0" class="data row17 col0" ><a href="TmY3_R.html" class="connectivity-link txt_OL_connecting">TmY3&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row17_col1" class="data row17 col1" >ACh</td>
+      <td id="T_210ae_row17_col2" class="data row17 col2" >135</td>
+      <td id="T_210ae_row17_col3" class="data row17 col3" >8.4</td>
+      <td id="T_210ae_row17_col4" class="data row17 col4" >0.5%</td>
+      <td id="T_210ae_row17_col5" class="data row17 col5" >94.6%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row18" class="row_heading level0 row18" >18</th>
+      <td id="T_210ae_row18_col0" class="data row18 col0" ><a href="MeLo12_R.html" class="connectivity-link txt_OL_connecting">MeLo12&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row18_col1" class="data row18 col1" >Glu</td>
+      <td id="T_210ae_row18_col2" class="data row18 col2" >107</td>
+      <td id="T_210ae_row18_col3" class="data row18 col3" >6.7</td>
+      <td id="T_210ae_row18_col4" class="data row18 col4" >0.4%</td>
+      <td id="T_210ae_row18_col5" class="data row18 col5" >95.0%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row19" class="row_heading level0 row19" >19</th>
+      <td id="T_210ae_row19_col0" class="data row19 col0" ><a href="LC4_R.html" class="connectivity-link txt_VPN">LC4&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row19_col1" class="data row19 col1" >ACh</td>
+      <td id="T_210ae_row19_col2" class="data row19 col2" >105</td>
+      <td id="T_210ae_row19_col3" class="data row19 col3" >6.6</td>
+      <td id="T_210ae_row19_col4" class="data row19 col4" >0.4%</td>
+      <td id="T_210ae_row19_col5" class="data row19 col5" >95.4%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row20" class="row_heading level0 row20" >20</th>
+      <td id="T_210ae_row20_col0" class="data row20 col0" ><a href="T2a_R.html" class="connectivity-link txt_OL_connecting">T2a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row20_col1" class="data row20 col1" >ACh</td>
+      <td id="T_210ae_row20_col2" class="data row20 col2" >92</td>
+      <td id="T_210ae_row20_col3" class="data row20 col3" >5.8</td>
+      <td id="T_210ae_row20_col4" class="data row20 col4" >0.3%</td>
+      <td id="T_210ae_row20_col5" class="data row20 col5" >95.7%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row21" class="row_heading level0 row21" >21</th>
+      <td id="T_210ae_row21_col0" class="data row21 col0" ><a href="TmY18_R.html" class="connectivity-link txt_OL_connecting">TmY18&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row21_col1" class="data row21 col1" >ACh</td>
+      <td id="T_210ae_row21_col2" class="data row21 col2" >91</td>
+      <td id="T_210ae_row21_col3" class="data row21 col3" >5.7</td>
+      <td id="T_210ae_row21_col4" class="data row21 col4" >0.3%</td>
+      <td id="T_210ae_row21_col5" class="data row21 col5" >96.0%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row22" class="row_heading level0 row22" >22</th>
+      <td id="T_210ae_row22_col0" class="data row22 col0" ><a href="TmY19a_R.html" class="connectivity-link txt_OL_connecting">TmY19a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row22_col1" class="data row22 col1" >GABA</td>
+      <td id="T_210ae_row22_col2" class="data row22 col2" >81</td>
+      <td id="T_210ae_row22_col3" class="data row22 col3" >5.1</td>
+      <td id="T_210ae_row22_col4" class="data row22 col4" >0.3%</td>
+      <td id="T_210ae_row22_col5" class="data row22 col5" >96.3%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row23" class="row_heading level0 row23" >23</th>
+      <td id="T_210ae_row23_col0" class="data row23 col0" ><a href="MeLo10_R.html" class="connectivity-link txt_OL_connecting">MeLo10&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row23_col1" class="data row23 col1" >Glu</td>
+      <td id="T_210ae_row23_col2" class="data row23 col2" >67</td>
+      <td id="T_210ae_row23_col3" class="data row23 col3" >4.2</td>
+      <td id="T_210ae_row23_col4" class="data row23 col4" >0.2%</td>
+      <td id="T_210ae_row23_col5" class="data row23 col5" >96.5%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row24" class="row_heading level0 row24" >24</th>
+      <td id="T_210ae_row24_col0" class="data row24 col0" ><a href="LT11_R.html" class="connectivity-link txt_VPN">LT11&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row24_col1" class="data row24 col1" >GABA</td>
+      <td id="T_210ae_row24_col2" class="data row24 col2" >64</td>
+      <td id="T_210ae_row24_col3" class="data row24 col3" >4.0</td>
+      <td id="T_210ae_row24_col4" class="data row24 col4" >0.2%</td>
+      <td id="T_210ae_row24_col5" class="data row24 col5" >96.8%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row25" class="row_heading level0 row25" >25</th>
+      <td id="T_210ae_row25_col0" class="data row25 col0" ><a href="Tm5Y_R.html" class="connectivity-link txt_OL_connecting">Tm5Y&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row25_col1" class="data row25 col1" >ACh</td>
+      <td id="T_210ae_row25_col2" class="data row25 col2" >60</td>
+      <td id="T_210ae_row25_col3" class="data row25 col3" >3.8</td>
+      <td id="T_210ae_row25_col4" class="data row25 col4" >0.2%</td>
+      <td id="T_210ae_row25_col5" class="data row25 col5" >97.0%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row26" class="row_heading level0 row26" >26</th>
+      <td id="T_210ae_row26_col0" class="data row26 col0" ><a href="TmY5a_R.html" class="connectivity-link txt_OL_connecting">TmY5a&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row26_col1" class="data row26 col1" >Glu</td>
+      <td id="T_210ae_row26_col2" class="data row26 col2" >58</td>
+      <td id="T_210ae_row26_col3" class="data row26 col3" >3.6</td>
+      <td id="T_210ae_row26_col4" class="data row26 col4" >0.2%</td>
+      <td id="T_210ae_row26_col5" class="data row26 col5" >97.2%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row27" class="row_heading level0 row27" >27</th>
+      <td id="T_210ae_row27_col0" class="data row27 col0" ><a href="CT1_L.html" class="connectivity-link txt_OL_connecting">CT1&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_210ae_row27_col1" class="data row27 col1" >GABA</td>
+      <td id="T_210ae_row27_col2" class="data row27 col2" >43</td>
+      <td id="T_210ae_row27_col3" class="data row27 col3" >2.7</td>
+      <td id="T_210ae_row27_col4" class="data row27 col4" >0.2%</td>
+      <td id="T_210ae_row27_col5" class="data row27 col5" >97.3%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row28" class="row_heading level0 row28" >28</th>
+      <td id="T_210ae_row28_col0" class="data row28 col0" ><a href="Tm23_R.html" class="connectivity-link txt_OL_intrinsic">Tm23&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row28_col1" class="data row28 col1" >GABA</td>
+      <td id="T_210ae_row28_col2" class="data row28 col2" >42</td>
+      <td id="T_210ae_row28_col3" class="data row28 col3" >2.6</td>
+      <td id="T_210ae_row28_col4" class="data row28 col4" >0.1%</td>
+      <td id="T_210ae_row28_col5" class="data row28 col5" >97.5%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row29" class="row_heading level0 row29" >29</th>
+      <td id="T_210ae_row29_col0" class="data row29 col0" ><a href="LC12_R.html" class="connectivity-link txt_VPN">LC12&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row29_col1" class="data row29 col1" >unclear</td>
+      <td id="T_210ae_row29_col2" class="data row29 col2" >39</td>
+      <td id="T_210ae_row29_col3" class="data row29 col3" >2.4</td>
+      <td id="T_210ae_row29_col4" class="data row29 col4" >0.1%</td>
+      <td id="T_210ae_row29_col5" class="data row29 col5" >97.6%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row30" class="row_heading level0 row30" >30</th>
+      <td id="T_210ae_row30_col0" class="data row30 col0" ><a href="Y14_R.html" class="connectivity-link txt_OL_connecting">Y14&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row30_col1" class="data row30 col1" >Glu</td>
+      <td id="T_210ae_row30_col2" class="data row30 col2" >38</td>
+      <td id="T_210ae_row30_col3" class="data row30 col3" >2.4</td>
+      <td id="T_210ae_row30_col4" class="data row30 col4" >0.1%</td>
+      <td id="T_210ae_row30_col5" class="data row30 col5" >97.8%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row31" class="row_heading level0 row31" >31</th>
+      <td id="T_210ae_row31_col0" class="data row31 col0" ><a href="LPLC2_R.html" class="connectivity-link txt_VPN">LPLC2&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row31_col1" class="data row31 col1" >ACh</td>
+      <td id="T_210ae_row31_col2" class="data row31 col2" >37</td>
+      <td id="T_210ae_row31_col3" class="data row31 col3" >2.3</td>
+      <td id="T_210ae_row31_col4" class="data row31 col4" >0.1%</td>
+      <td id="T_210ae_row31_col5" class="data row31 col5" >97.9%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row32" class="row_heading level0 row32" >32</th>
+      <td id="T_210ae_row32_col0" class="data row32 col0" ><a href="Li38_L.html" class="connectivity-link txt_OL_intrinsic">Li38&#8239;<span class="txt_hemisphere" title="Cell body in left hemisphere">(L)</span></a></td>
+      <td id="T_210ae_row32_col1" class="data row32 col1" >GABA</td>
+      <td id="T_210ae_row32_col2" class="data row32 col2" >31</td>
+      <td id="T_210ae_row32_col3" class="data row32 col3" >1.9</td>
+      <td id="T_210ae_row32_col4" class="data row32 col4" >0.1%</td>
+      <td id="T_210ae_row32_col5" class="data row32 col5" >98.0%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row33" class="row_heading level0 row33" >33</th>
+      <td id="T_210ae_row33_col0" class="data row33 col0" ><a href="LC17_R.html" class="connectivity-link txt_VPN">LC17&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row33_col1" class="data row33 col1" >unclear</td>
+      <td id="T_210ae_row33_col2" class="data row33 col2" >30</td>
+      <td id="T_210ae_row33_col3" class="data row33 col3" >1.9</td>
+      <td id="T_210ae_row33_col4" class="data row33 col4" >0.1%</td>
+      <td id="T_210ae_row33_col5" class="data row33 col5" >98.1%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row34" class="row_heading level0 row34" >34</th>
+      <td id="T_210ae_row34_col0" class="data row34 col0" ><a href="LPLC4_R.html" class="connectivity-link txt_VPN">LPLC4&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row34_col1" class="data row34 col1" >ACh</td>
+      <td id="T_210ae_row34_col2" class="data row34 col2" >30</td>
+      <td id="T_210ae_row34_col3" class="data row34 col3" >1.9</td>
+      <td id="T_210ae_row34_col4" class="data row34 col4" >0.1%</td>
+      <td id="T_210ae_row34_col5" class="data row34 col5" >98.2%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row35" class="row_heading level0 row35" >35</th>
+      <td id="T_210ae_row35_col0" class="data row35 col0" ><a href="LLPC1_R.html" class="connectivity-link txt_VPN">LLPC1&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row35_col1" class="data row35 col1" >ACh</td>
+      <td id="T_210ae_row35_col2" class="data row35 col2" >29</td>
+      <td id="T_210ae_row35_col3" class="data row35 col3" >1.8</td>
+      <td id="T_210ae_row35_col4" class="data row35 col4" >0.1%</td>
+      <td id="T_210ae_row35_col5" class="data row35 col5" >98.3%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row36" class="row_heading level0 row36" >36</th>
+      <td id="T_210ae_row36_col0" class="data row36 col0" ><a href="Li25_R.html" class="connectivity-link txt_OL_intrinsic">Li25&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row36_col1" class="data row36 col1" >GABA</td>
+      <td id="T_210ae_row36_col2" class="data row36 col2" >28</td>
+      <td id="T_210ae_row36_col3" class="data row36 col3" >1.8</td>
+      <td id="T_210ae_row36_col4" class="data row36 col4" >0.1%</td>
+      <td id="T_210ae_row36_col5" class="data row36 col5" >98.4%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row37" class="row_heading level0 row37" >37</th>
+      <td id="T_210ae_row37_col0" class="data row37 col0" ><a href="Li28_R.html" class="connectivity-link txt_OL_intrinsic">Li28&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row37_col1" class="data row37 col1" >GABA</td>
+      <td id="T_210ae_row37_col2" class="data row37 col2" >26</td>
+      <td id="T_210ae_row37_col3" class="data row37 col3" >1.6</td>
+      <td id="T_210ae_row37_col4" class="data row37 col4" >0.1%</td>
+      <td id="T_210ae_row37_col5" class="data row37 col5" >98.5%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row38" class="row_heading level0 row38" >38</th>
+      <td id="T_210ae_row38_col0" class="data row38 col0" ><a href="Li15_R.html" class="connectivity-link txt_OL_intrinsic">Li15&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row38_col1" class="data row38 col1" >GABA</td>
+      <td id="T_210ae_row38_col2" class="data row38 col2" >25</td>
+      <td id="T_210ae_row38_col3" class="data row38 col3" >1.6</td>
+      <td id="T_210ae_row38_col4" class="data row38 col4" >0.1%</td>
+      <td id="T_210ae_row38_col5" class="data row38 col5" >98.6%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row39" class="row_heading level0 row39" >39</th>
+      <td id="T_210ae_row39_col0" class="data row39 col0" ><a href="Li17_R.html" class="connectivity-link txt_OL_intrinsic">Li17&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row39_col1" class="data row39 col1" >GABA</td>
+      <td id="T_210ae_row39_col2" class="data row39 col2" >24</td>
+      <td id="T_210ae_row39_col3" class="data row39 col3" >1.5</td>
+      <td id="T_210ae_row39_col4" class="data row39 col4" >0.1%</td>
+      <td id="T_210ae_row39_col5" class="data row39 col5" >98.7%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row40" class="row_heading level0 row40" >40</th>
+      <td id="T_210ae_row40_col0" class="data row40 col0" ><a href="Li29_R.html" class="connectivity-link txt_OL_intrinsic">Li29&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row40_col1" class="data row40 col1" >GABA</td>
+      <td id="T_210ae_row40_col2" class="data row40 col2" >23</td>
+      <td id="T_210ae_row40_col3" class="data row40 col3" >1.4</td>
+      <td id="T_210ae_row40_col4" class="data row40 col4" >0.1%</td>
+      <td id="T_210ae_row40_col5" class="data row40 col5" >98.8%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row41" class="row_heading level0 row41" >41</th>
+      <td id="T_210ae_row41_col0" class="data row41 col0" ><a href="MeLo11_R.html" class="connectivity-link txt_OL_connecting">MeLo11&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row41_col1" class="data row41 col1" >Glu</td>
+      <td id="T_210ae_row41_col2" class="data row41 col2" >21</td>
+      <td id="T_210ae_row41_col3" class="data row41 col3" >1.3</td>
+      <td id="T_210ae_row41_col4" class="data row41 col4" >0.1%</td>
+      <td id="T_210ae_row41_col5" class="data row41 col5" >98.9%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row42" class="row_heading level0 row42" >42</th>
+      <td id="T_210ae_row42_col0" class="data row42 col0" ><a href="TmY19b_R.html" class="connectivity-link txt_OL_connecting">TmY19b&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row42_col1" class="data row42 col1" >GABA</td>
+      <td id="T_210ae_row42_col2" class="data row42 col2" >18</td>
+      <td id="T_210ae_row42_col3" class="data row42 col3" >1.1</td>
+      <td id="T_210ae_row42_col4" class="data row42 col4" >0.1%</td>
+      <td id="T_210ae_row42_col5" class="data row42 col5" >98.9%</td>
+    </tr>
+    <tr>
+      <th id="T_210ae_level0_row43" class="row_heading level0 row43" >43</th>
+      <td id="T_210ae_row43_col0" class="data row43 col0" ><a href="Tm6_R.html" class="connectivity-link txt_OL_connecting">Tm6&#8239;<span class="txt_hemisphere" title="Cell body in right hemisphere">(R)</span></a></td>
+      <td id="T_210ae_row43_col1" class="data row43 col1" >ACh</td>
+      <td id="T_210ae_row43_col2" class="data row43 col2" >16</td>
+      <td id="T_210ae_row43_col3" class="data row43 col3" >1.0</td>
+      <td id="T_210ae_row43_col4" class="data row43 col4" >0.1%</td>
+      <td id="T_210ae_row43_col5" class="data row43 col5" >99.0%</td>
+    </tr>
+  </tbody>
+</table>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+   
+        <footer class="row">
+        <div class="col">
+            <hr class="h1-divider">
+            <i>Pages Updated 2024-04-17</i> | 
+            <em>Source</em>: optic-lobe with UUID 5b1b4a672f2b4dcbbb6bb71c75542e30 | 
+            <em>Last database edit</em> 2023-10-31 19:51:27
+        </div>
+        </footer>
+     </div>
+</body>
+</html>
