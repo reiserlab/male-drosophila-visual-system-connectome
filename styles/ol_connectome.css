@@ -1,0 +1,199 @@
+:root {
+    --grid-maxWidth: 140rem;
+    --font-family-sans: Arial, sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+body>footer {
+    position: sticky;
+    top: 100vh;
+}
+.nav-right a:link, .nav-right a:visited {
+    color: #007bff;
+    text-decoration: none;
+}
+.nav-right a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+.nav-right a:active {
+    color: #004299;
+}
+
+.col-OL_intrinsic,.txt_OL_intrinsic{color:#029e73}
+.col-OL_connecting, .txt_OL_connecting{color:#D55E00}
+.col-VPN,.txt_VPN{color:#0173b2}
+.col-VCN,.txt_VCN{color:#de8f05}
+.col-other,.txt_other{color:#cc78bc}
+
+.bg-OL_intrinsic{background-color:#029e7322}
+.bg-OL_connecting{background-color:#D55E0022}
+.bg-VPN{background-color:#0173b222}
+.bg-VCN{background-color:#de8f0522}
+.bg-other{background-color:#cc78bc22}
+
+.dropdown summary{ list-style:none; padding:10px 20px; padding-top:17px; cursor:pointer;}
+.dropdown summary:hover{ text-decoration:underline; color:var(--color-grey);}
+
+nav form input{margin-top:10px;}
+
+dd {
+    margin-bottom: 25px; /* Adds space between glossary items */
+}
+
+dt.short {
+    font-weight: bold;
+    display: inline;
+    float:left;
+    margin-right:20px;
+}
+.roi-card table{
+    width:1%;
+}
+.roi-card tr, .roi-card td{
+    margin:0;padding:5px 2px;
+}
+.roi-card td.stat-val{
+    padding-right:50px;text-align:right;
+}
+
+.connectivity-input{padding-right:0px; border:none;}
+
+@media screen and (min-width: 1200px) {
+    .connectivity-input{
+        padding-right:20px; margin-left:0; border-right:1px solid black;
+    }
+}
+
+.connectivity-output{
+    margin-left:0;
+}
+
+.txt_hemisphere{
+    color:#888; 
+    font-size:80%;
+}
+.connectivity-table table td{
+    padding-top:.3rem;
+    padding-bottom:.1rem;
+}
+.connectivity-table table th{
+    vertical-align:bottom;
+}
+.connectivity-table table tr:nth-child(2n) td {
+    background-color: #f8f8f8;
+}
+
+.connectivity-table .col2, .connectivity-table .col3, .connectivity-table .col4, .connectivity-table .col5{
+    text-align:right;
+}
+
+.hover_group:hover {
+    opacity: 1;
+}
+
+.connectivity-link:hover {
+    filter:brightness(85%);
+    text-decoration: underline;
+}
+
+.non-functional-link {
+    color: grey;
+    cursor: default;
+    text-decoration: none;
+}
+
+.gallery_video{
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+}
+.threeD_view {
+    width: 100%;
+    overflow: hidden;
+}
+.card header h3 a{
+    color:inherit;
+}
+    
+.gallery_video iframe {
+    width: 300%;
+    height: 100%;
+    margin-left:-100%;
+}
+.threeD_view iframe{
+    width:100%;
+    height: 400px;
+}
+    
+.counter{
+    font-size:80%;
+}
+
+.main-group-nt-pred{
+   font-weight: 500;
+   font-size: 1.2em;
+   padding: 0;
+   margin-top: 0;
+   margin-bottom: 10px;
+}
+
+.pad-left{
+    padding-left: 20px;
+}
+                            
+.row thead tr {
+    border-bottom: 2px solid #000;
+}
+.row tbody th, .row tbody td {
+    border-bottom: none;
+}
+.layer-stats-table thead th {
+    padding: 10px;
+}
+.layer-stats-table tbody th,
+.layer-stats-table tbody td {
+    padding: 3px;
+}
+
+th.row_heading {
+    text-align: left !important;
+    padding-left: 20px !important;
+}
+
+.connectivity-table table td{
+    padding-top:.3rem;
+    padding-bottom:.1rem;
+}
+.connectivity-table table th{
+    vertical-align:bottom;
+}
+.connectivity-table table tr:nth-child(2n) td {
+    background-color: #f8f8f8;
+}
+/* .card p {
+    margin-bottom: 5px;
+} */
+.ame-stats tbody th, .cb-stats tbody th, .me-stats tbody th {
+    color: transparent;
+}
+.text-center td, .text-center thead th{
+    text-align:center;
+}
+.text-left td, .text-left thead th{
+    text-align:left;
+}
+.connectivity-table tbody tr th,  .connectivity-table thead th.blank.level0{
+    display: none;
+}
+.connectivity-table {
+    padding-left: 10px;
+    text-align:left;
+}
+.connectivity-table tr th, .connectivity-table td {
+    padding-left: 0px;
+    padding-right: 20px;
+}
